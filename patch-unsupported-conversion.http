@@ -1,0 +1,28 @@
+## Create a person
+POST http://localhost:8080/persons
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Test",
+  "birthday": "2000-01-01"
+}
+
+### Check the person got created
+GET http://localhost:8080/persons/1
+
+### This works because Strings are supported
+PATCH http://localhost:8080/persons/1
+Content-Type: application/json-patch+json
+
+[
+  {"op": "replace", "path": "/name", "value": "Changed Test"}
+]
+
+### This fails because LocalDate isn't supported
+PATCH http://localhost:8080/persons/1
+Content-Type: application/json-patch+json
+
+[
+  {"op": "replace", "path": "/birthday", "value": "1980-02-20"}
+]
